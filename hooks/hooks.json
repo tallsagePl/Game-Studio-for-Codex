@@ -1,0 +1,91 @@
+{
+  "description": "Optional Game Studio for Codex hooks. Review and trust before enabling. Not upstream hook parity.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${PLUGIN_ROOT}/skills/game-studios/scripts/studio.py\" hook",
+            "command_windows": "python \"${PLUGIN_ROOT}/skills/game-studios/scripts/studio.py\" hook",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "^(Bash|exec_command|PowerShell|apply_patch|Read|Edit|Write)$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${PLUGIN_ROOT}/skills/game-studios/scripts/studio.py\" hook",
+            "command_windows": "python \"${PLUGIN_ROOT}/skills/game-studios/scripts/studio.py\" hook",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "apply_patch|Edit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${PLUGIN_ROOT}/skills/game-studios/scripts/studio.py\" hook",
+            "command_windows": "python \"${PLUGIN_ROOT}/skills/game-studios/scripts/studio.py\" hook",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${PLUGIN_ROOT}/skills/game-studios/scripts/studio.py\" hook",
+            "command_windows": "python \"${PLUGIN_ROOT}/skills/game-studios/scripts/studio.py\" hook",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${PLUGIN_ROOT}/skills/game-studios/scripts/studio.py\" hook",
+            "command_windows": "python \"${PLUGIN_ROOT}/skills/game-studios/scripts/studio.py\" hook",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${PLUGIN_ROOT}/skills/game-studios/scripts/studio.py\" hook",
+            "command_windows": "python \"${PLUGIN_ROOT}/skills/game-studios/scripts/studio.py\" hook",
+            "timeout": 5
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"${PLUGIN_ROOT}/skills/game-studios/scripts/studio.py\" hook",
+            "command_windows": "python \"${PLUGIN_ROOT}/skills/game-studios/scripts/studio.py\" hook",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}

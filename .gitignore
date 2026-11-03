@@ -175,3 +175,8 @@ $RECYCLE.BIN/
 # the project root. Anchored so a reports/ folder elsewhere stays tracked.
 /reports/
 /test-results/
+
+# Codex adapter runtime and local state
+.codex/studio-state/
+.codex/studio.local.json
+

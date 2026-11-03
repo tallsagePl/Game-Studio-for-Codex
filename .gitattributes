@@ -27,3 +27,8 @@
 # .gitattributes governs the INDEX. It does not retro-fix a working tree that
 # predates the rule -- run `git add --renormalize .` for that.
 .claude/**/*.md text eol=lf
+
+# Preserve raw-byte provenance on every platform
+skills/game-studios/references/upstream/** -text
+
+.claude/** -text
