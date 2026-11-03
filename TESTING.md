@@ -25,3 +25,9 @@ No full parity claim: original hook behaviors, all configuration effects, live
 plugin loading/trust and game-development outcomes are not covered.
 See COMPATIBILITY.md for the concrete gaps.
 
+
+Fresh-checkout verification: a separate local clone with core.autocrlf=true
+passed verify and the same 20 cases (19 passed, one symlink skip).
+Independent review identified and rechecked transport, packaging, attribution
+and line-ending corrections. Full parity remains unestablished.
+
