@@ -1,6 +1,6 @@
 # Game Studio for Codex
 
-**Game-development workflows for Codex: 49 role profiles, 74 workflows, production templates and portable tools.**
+**Turn Codex into your indie game studio.** Bring in a designer, gameplay programmer, balance analyst, or QA lead when the task calls for one. Start with **49 specialist roles and 74 workflows** for Unity, Godot, and Unreal, from your first mechanic to release review.
 
 An independent MIT-licensed adaptation of [Donchitos/Claude-Code-Game-Studios](https://github.com/Donchitos/Claude-Code-Game-Studios), originally built for Claude Code. Source history and attribution are preserved. Not affiliated with or endorsed by Donchitos, OpenAI or Anthropic.
 
@@ -15,6 +15,8 @@ An independent MIT-licensed adaptation of [Donchitos/Claude-Code-Game-Studios](h
 - Optional native Codex hooks for context, limited metadata records and bounded command/path guards. These are not the full original hook suite.
 
 The model develops the game using actual Codex tools. The reference-mode utility does not call models, build a game or launch agents. Explicit initialized-runtime helpers can invoke the existing engine/test commands for the selected project. No Claude Code, API keys, network services or third-party Python packages are required for the portable tools.
+
+If this helps you ship your game, give the repo a star so other solo developers can find it.
 
 ## Install
 
