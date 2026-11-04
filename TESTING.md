@@ -31,3 +31,23 @@ passed verify and the same 20 cases (19 passed, one symlink skip).
 Independent review identified and rechecked transport, packaging, attribution
 and line-ending corrections. Full parity remains unestablished.
 
+
+## v0.2 retained runtime — 2026-11-04
+
+Windows / Python 3.13.1. The 36-case full suite passed 33 cases and skipped
+three (two symlink fixtures unsupported on this host, and the opt-in retained
+Bash roundtrip). The 16-case runtime subset then ran with
+CODEX_STUDIO_RUNTIME_TESTS=1: 15 passed, one symlink skip. That second run verified
+actual upstream rigor resolution and checkpoint write/read using Git Bash.
+Across the two runs, 34 distinct cases passed; two symlink cases remain skipped.
+The verification command matched 379 original references and 569 runtime/seed
+payload files. Fixture tests exercised all 49 generated native role definitions,
+patch normalization, permission checks, native event responses and contracts.
+
+Live plugin trust, real Codex event delivery and the complete original
+behavioral suite remain unverified. No marketplace/public push or game-project
+runtime activation was performed by these checks.
+
+Final integrated run after choosing the reviewed project-local workflow body: 
+36 cases, 34 passed, 2 symlink cases skipped, including the real Bash roundtrip.
+

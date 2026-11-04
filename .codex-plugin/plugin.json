@@ -1,7 +1,7 @@
 {
   "name": "game-studio-for-codex",
-  "version": "0.1.0",
-  "description": "Experimental Codex adaptation of Claude Code Game Studios: roles, workflows, templates and optional native hooks.",
+  "version": "0.2.0",
+  "description": "Codex transport for pinned game-studio runtime, roles, configuration, validation and session continuity. Integration tests pending.",
   "skills": "./skills/",
   "hooks": "./hooks/hooks.json"
 }

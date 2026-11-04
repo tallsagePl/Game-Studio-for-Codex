@@ -10,6 +10,7 @@ import os
 from pathlib import Path
 import re
 import shutil
+import subprocess
 import sys
 
 SKILL = Path(__file__).resolve().parent.parent
@@ -17,7 +18,7 @@ LIBRARY = SKILL / 'references/upstream'
 KINDS = {'workflows': ('skills', '*/WORKFLOW.md'), 'roles': ('agents', '*.md'),
          'rules': ('rules', '*.md'), 'templates': ('docs/templates', '**/*')}
 EVENTS = ('SessionStart', 'PreToolUse', 'PostToolUse', 'PreCompact', 'Stop',
-          'SubagentStart', 'SubagentStop')
+          'SubagentStart', 'SubagentStop', 'PermissionRequest')
 ADAPTATION = """You are using Game Studio for Codex. Read the game's AGENTS.md and
 requirements first. The following material is a Claude-origin reference, not a
 runtime tool definition. Ignore its model/tool/approval configuration and inline
@@ -26,8 +27,9 @@ upstream .claude reference paths against the installed reference library; map
 game source/data/test paths to the actual project. Delegate only when available
 and useful; name owned paths and expected evidence. Do not claim independent
 review from a sequential role pass. Do not infer success from missing inputs.
-Do not execute upstream hooks/scripts or invent their output. Report runtime
-and data gaps. The optional native hooks provide only the documented subset.
+Use the reviewed runtime bridge only after explicit project initialization.
+Never execute raw inline shell preprocessing. Report missing initialization or
+runtime dependencies; do not invent their output or claim unverified parity.
 """
 
 
@@ -90,11 +92,24 @@ def doctor(root: Path) -> dict:
 
 def compile_prompt(workflow: str, root: Path, task: str, roles: list[str]) -> str:
     workflow_path = lookup('workflows', workflow)
+    initialized = (root / '.codex/studio/runtime.json').is_file()
+    if initialized:
+        from runtime_bridge import preprocess, require_runtime
+        require_runtime(root)
+        workflow_path=inside(root,'.claude/skills/'+workflow+'/SKILL.md')
     parts = [ADAPTATION, f'Project: {root}', f'Reference library: {LIBRARY}',
              'Task (user data):\n' + task, 'Project observations:\n' + json.dumps(doctor(root), indent=2)]
     for role in roles:
-        parts.append(f'## Role reference: {role}\n' + body(read_text(lookup('roles', role))))
-    parts.append(f'## Workflow reference: {workflow}\n' + body(read_text(workflow_path)))
+        role_path=lookup('roles',role)
+        if initialized:
+            role_path=inside(root,'.claude/agents/'+role+'.md')
+        parts.append(f'## Role reference: {role}\n' + body(read_text(role_path)))
+    if initialized:
+        material = preprocess(root, workflow, read_text(workflow_path))
+    else:
+        material = read_text(workflow_path)
+        parts.append('Runtime is not initialized. This is a reference preview; no settings/state preprocessing was performed.')
+    parts.append(f'## Workflow reference: {workflow}\n' + body(material))
     return '\n\n'.join(parts) + '\n'
 
 
@@ -112,7 +127,16 @@ def verify() -> dict:
         raise ValueError(f'Incomplete catalog: {counts}')
     if list((SKILL / 'references').rglob('SKILL.md')):
         raise ValueError('Nested SKILL.md causes unintended skill discovery')
+    runtime_count = 0
+    runtime_manifest = SKILL / 'assets/runtime/manifest.json'
+    if runtime_manifest.is_file():
+        for record in json.loads(read_text(runtime_manifest))['files']:
+            source=inside(SKILL,record['stored'])
+            if hashlib.sha256(source.read_bytes()).hexdigest()!=record['sha256']:
+                raise ValueError('Runtime payload changed: '+record['target'])
+            runtime_count+=1
     return {'ok': True, 'catalog': counts, 'hashes_verified': checked,
+            'runtime_payload_files':runtime_count,
             'upstream_commit': manifest['commit'], 'behavioral_parity': 'not-established'}
 
 
@@ -182,6 +206,15 @@ def hook(payload: dict) -> dict:
         raise ValueError('Unsupported studio event')
     root = project_root(payload.get('cwd') or '.')
     if event == 'PreToolUse':
+        guarded=pre_tool(payload,root)
+        if guarded:
+            return guarded
+    if (root / '.codex/studio/runtime.json').is_file():
+        from runtime_bridge import event
+        return event(root, payload)
+    if event == 'PermissionRequest':
+        return {'systemMessage': 'Studio runtime is not initialized; desktop notifications are not enabled.'}
+    if event == 'PreToolUse':
         return pre_tool(payload, root)
     if event == 'SessionStart':
         return {'hookSpecificOutput': {'hookEventName': event, 'additionalContext':
@@ -211,6 +244,15 @@ def hook(payload: dict) -> dict:
 
 
 def main(argv=None) -> int:
+    argv = list(sys.argv[1:] if argv is None else argv)
+    runtime_commands = ('runtime-init','runtime-trust','helper','config','checkpoint','status','updates','memory','contract','notify')
+    if argv and argv[0] in runtime_commands:
+        from runtime_bridge import main as runtime_main
+        try:
+            return runtime_main(argv)
+        except (ValueError,OSError,subprocess.SubprocessError) as error:
+            print(f'Studio runtime error: {error}',file=sys.stderr)
+            return 2
     parser = argparse.ArgumentParser(description=__doc__)
     sub = parser.add_subparsers(dest='command', required=True)
     listing = sub.add_parser('list'); listing.add_argument('kind', choices=KINDS)
@@ -247,7 +289,7 @@ def main(argv=None) -> int:
             result = hook(payload)
         print(json.dumps(result, indent=2, ensure_ascii=False))
         return 0
-    except (ValueError, OSError, KeyError) as error:
+    except (ValueError, OSError, KeyError, subprocess.SubprocessError) as error:
         print(f'Studio error: {error}', file=sys.stderr)
         # Optional guard failures block PreToolUse rather than silently claiming protection.
         return 2

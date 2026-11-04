@@ -1,5 +1,5 @@
 {
-  "description": "Optional Game Studio for Codex hooks. Review and trust before enabling. Not upstream hook parity.",
+  "description": "Optional Codex transport for the retained studio runtime. Requires initialization and hook trust; behavioral validation pending.",
   "hooks": {
     "SessionStart": [
       {
@@ -8,33 +8,33 @@
             "type": "command",
             "command": "python3 \"${PLUGIN_ROOT}/skills/game-studios/scripts/studio.py\" hook",
             "command_windows": "python \"${PLUGIN_ROOT}/skills/game-studios/scripts/studio.py\" hook",
-            "timeout": 5
+            "timeout": 120
           }
         ]
       }
     ],
     "PreToolUse": [
       {
-        "matcher": "^(Bash|exec_command|PowerShell|apply_patch|Read|Edit|Write)$",
+        "matcher": "^(Bash|exec_command|PowerShell|apply_patch|Read|Edit|Write|mcp__.*read_file)$",
         "hooks": [
           {
             "type": "command",
             "command": "python3 \"${PLUGIN_ROOT}/skills/game-studios/scripts/studio.py\" hook",
             "command_windows": "python \"${PLUGIN_ROOT}/skills/game-studios/scripts/studio.py\" hook",
-            "timeout": 5
+            "timeout": 120
           }
         ]
       }
     ],
     "PostToolUse": [
       {
-        "matcher": "apply_patch|Edit|Write",
+        "matcher": "^(apply_patch|Edit|Write)$",
         "hooks": [
           {
             "type": "command",
             "command": "python3 \"${PLUGIN_ROOT}/skills/game-studios/scripts/studio.py\" hook",
             "command_windows": "python \"${PLUGIN_ROOT}/skills/game-studios/scripts/studio.py\" hook",
-            "timeout": 5
+            "timeout": 120
           }
         ]
       }
@@ -46,7 +46,7 @@
             "type": "command",
             "command": "python3 \"${PLUGIN_ROOT}/skills/game-studios/scripts/studio.py\" hook",
             "command_windows": "python \"${PLUGIN_ROOT}/skills/game-studios/scripts/studio.py\" hook",
-            "timeout": 5
+            "timeout": 120
           }
         ]
       }
@@ -58,7 +58,7 @@
             "type": "command",
             "command": "python3 \"${PLUGIN_ROOT}/skills/game-studios/scripts/studio.py\" hook",
             "command_windows": "python \"${PLUGIN_ROOT}/skills/game-studios/scripts/studio.py\" hook",
-            "timeout": 5
+            "timeout": 120
           }
         ]
       }
@@ -70,7 +70,7 @@
             "type": "command",
             "command": "python3 \"${PLUGIN_ROOT}/skills/game-studios/scripts/studio.py\" hook",
             "command_windows": "python \"${PLUGIN_ROOT}/skills/game-studios/scripts/studio.py\" hook",
-            "timeout": 5
+            "timeout": 120
           }
         ]
       }
@@ -82,7 +82,19 @@
             "type": "command",
             "command": "python3 \"${PLUGIN_ROOT}/skills/game-studios/scripts/studio.py\" hook",
             "command_windows": "python \"${PLUGIN_ROOT}/skills/game-studios/scripts/studio.py\" hook",
-            "timeout": 5
+            "timeout": 120
+          }
+        ]
+      }
+    ],
+    "PermissionRequest": [
+      {
+        "hooks": [
+          {
+            "command": "python3 \"${PLUGIN_ROOT}/skills/game-studios/scripts/studio.py\" hook",
+            "command_windows": "python \"${PLUGIN_ROOT}/skills/game-studios/scripts/studio.py\" hook",
+            "timeout": 20,
+            "type": "command"
           }
         ]
       }

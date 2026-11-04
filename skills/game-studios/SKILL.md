@@ -25,9 +25,9 @@ The portable helper is `scripts/studio.py` relative to this skill. Python 3.11+ 
 
 Claude `model`, `allowed-tools`, `context`, `memory` and `maxTurns` frontmatter is reference metadata, not Codex configuration. Keep the user's selected Codex model. Read/Glob/Grep map to available file tools; Write/Edit to authorized edits; AskUserQuestion to available questions; Task/Agent/TeamCreate to actual Codex delegation. Native Claude slash commands are not registered by this single-skill package: use `$game-studios` and natural-language workflow names.
 
-Do not execute upstream inline `!` shell expansions. The helper removes them from compiled prompts. Upstream .claude paths refer to reference resources, not a directory to create automatically in a game. Resolve SKILL.md references to WORKFLOW.md, document/template paths to `references/upstream`, and game paths to the actual project. Locate real data, code and tests before applying Godot-style src/assets defaults to Unity or Unreal.
+Do not execute raw inline `!` shell expansions. After explicit runtime-init, the allowlisted bridge resolves supported preprocessing using pinned helpers; uninitialized projects remain reference previews. Upstream .claude paths refer to reference resources, not a directory to create automatically in a game. Resolve SKILL.md references to WORKFLOW.md, document/template paths to `references/upstream`, and game paths to the actual project. Locate real data, code and tests before applying Godot-style src/assets defaults to Unity or Unreal.
 
-Do not invent results for omitted upstream scripts or configuration. `doctor --project <root>` observes known engine markers and project documents; it does not implement every project.yaml resolver. Original helpers remain available only in the fork checkout's .claude directory and are not executed by the portable package.
+Do not invent results for omitted upstream scripts or configuration. `doctor --project <root>` observes known engine markers and project documents; it does not implement every project.yaml resolver. The complete pinned helper engine can now be initialized explicitly in a project. Follow references/RUNTIME.md; do not bypass the bridge or silently initialize a game.
 
 ## Rules, checks and session continuity
 
@@ -35,7 +35,7 @@ Read relevant path-scoped guidance in `references/upstream/rules/` before editin
 
 Small clear tasks can proceed directly. Significant behavior benefits from fresh review and affected tests. Before committing or delivering, check actual diff, requirements, test/build results and retained evidence. No agent can claim independent acceptance of its own implementation.
 
-The optional Codex plugin supplies native session context, bounded local event records, a limited destructive-command/secret-path guard, patch-path checks and subagent lifecycle reminders. Hooks require runtime support and user trust; installing this skill alone does not enable them. They are guardrails, not a sandbox, and are not equivalent to all 15 upstream hooks. Read references/COMPATIBILITY.md before claiming feature parity. In skill-only mode, perform the relevant checks explicitly.
+The optional Codex plugin routes supported native events to the retained upstream handlers after explicit runtime-init and hook trust. Without initialization it provides only reference-mode guardrails. Neither mode replaces runtime permissions, and live behavioral parity is unverified. Read references/COMPATIBILITY.md before claiming feature parity. In skill-only mode, perform the relevant checks explicitly.
 
 Use `artifact --project <root> --path <relative-path>` to verify a promised file exists without reading its content. Use `verify` for catalog/provenance integrity. Preserve user authorization; do not add approval rituals copied from upstream prose for already authorized ordinary edits. Concept changes, release decisions and publication follow actual user instructions.
 
@@ -44,3 +44,9 @@ Use `artifact --project <root> --path <relative-path>` to verify a promised file
 Upstream: https://github.com/Donchitos/Claude-Code-Game-Studios at commit 05ad7c8a5b8aa2aa86bbd3439ae7cf7295cac418. The MIT notice is retained in references/upstream/LICENSE. Original reference bytes are preserved; only SKILL.md filenames become WORKFLOW.md. references/provenance.json records the mapping and hashes.
 
 All workflows and roles are available as adapted instructions; catalog completeness is not proof that every workflow has produced a correct game result. Never turn a structural check into a full behavioral parity claim.
+
+## Full runtime mode
+
+Read references/RUNTIME.md when configuration, automatic validation, checkpoint recovery, role memory or native agent profiles are needed. Initialize only the confirmed project with runtime-init; existing .claude data is not replaced. The 569-file payload includes all 434 upstream runtime files and original behavioral specs. Native hooks require actual host trust. Register actual subagent artifact contracts, write checkpoints at task boundaries and keep the user-selected model. Preserve runtime integrity; review modifications before runtime-trust --accept. Automatic update checks remain disabled unless explicitly requested. Runtime implementation is pending integration validation; do not claim full parity from the presence of source files.
+
+

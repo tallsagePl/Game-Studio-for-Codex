@@ -4,7 +4,7 @@
 
 An independent MIT-licensed adaptation of [Donchitos/Claude-Code-Game-Studios](https://github.com/Donchitos/Claude-Code-Game-Studios), originally built for Claude Code. Source history and attribution are preserved. Not affiliated with or endorsed by Donchitos, OpenAI or Anthropic.
 
-> **Experimental port, v0.1.0. Full behavioral parity is not established.** The complete role/workflow library is available as instructions; original execution, configuration and hooks are not interchangeable with Codex. See [COMPATIBILITY.md](COMPATIBILITY.md). Catalog tests are not 74 successful end-to-end game tasks.
+> **Experimental port, v0.2.0. Full behavioral parity is not established.** The complete role/workflow library is available as instructions; the pinned execution/configuration/hook engine is now available through explicit runtime initialization, with platform adaptations that still need integration validation. See [COMPATIBILITY.md](COMPATIBILITY.md). Catalog tests are not 74 successful end-to-end game tasks.
 
 ## Included
 
@@ -14,7 +14,7 @@ An independent MIT-licensed adaptation of [Donchitos/Claude-Code-Game-Studios](h
 - A self-contained Codex skill and portable tools for preparing prompts, observing a project and checking promised artifacts.
 - Optional native Codex hooks for context, limited metadata records and bounded command/path guards. These are not the full original hook suite.
 
-The model develops the game using actual Codex tools. The Python utility does not call a model, build a game or launch 49 background agents. No Claude Code, API keys, network services or third-party Python packages are required for the portable tools.
+The model develops the game using actual Codex tools. The reference-mode utility does not call models, build a game or launch agents. Explicit initialized-runtime helpers can invoke the existing engine/test commands for the selected project. No Claude Code, API keys, network services or third-party Python packages are required for the portable tools.
 
 ## Install
 
@@ -69,3 +69,9 @@ This fork adds Codex translation, portable tools, native handler subsets and ada
 Перенос процедур игровой студии из Claude Code в Codex: роли, игровые процессы, шаблоны и инструменты проверки. Работает с выбранным проектом и действующими правилами команды. Claude Code не нужен; все роли одновременно не запускаются.
 
 Это экспериментальная версия. Библиотека перенесена полностью, но не все механизмы оригинала реализованы и проверены. Наличие 74 инструкций не доказывает работу всех процессов; конкретные отличия перечислены в COMPATIBILITY.md.
+
+## Retained runtime mode (v0.2)
+
+The remaining source mechanisms are packaged: complete settings resolver, helper scripts, original 15 hook handlers, checkpoint recovery, agent memory and behavioral specs. Read [RUNTIME.md](RUNTIME.md) before initialization. The runtime needs Bash (Git Bash on Windows) and Python; reference-only tools remain Python-only. runtime-init exports 49 native Codex role profiles and refuses existing .claude data. It does not select models or trust hooks automatically. Automatic update checks are disabled; explicit update checks require --allow-network. Version 0.1 fixture results do not validate this new engine path. See [TEST-PLAN.md](TEST-PLAN.md) for remaining integration checks.
+
+

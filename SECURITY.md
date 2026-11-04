@@ -15,10 +15,11 @@ Use dummy data, not credentials, real user information or private game content.
 
 The optional command guard is heuristic and not a sandbox. Codex permissions
 remain authoritative. Review hook definitions before trusting them. The portable
-tools make no network/model calls and do not execute the original shell scripts.
+reference tools make no network/model calls. Explicit runtime initialization enables the pinned shell engine. Update requests are off by default; configured game helpers can have their own side effects.
 
 For vulnerabilities in Codex itself, use OpenAI's official reporting process;
 for Claude Code itself, use Anthropic's. General behavior of an underlying model
 is not proven to be a vulnerability in this toolkit.
 
 Preserved upstream policy: docs/UPSTREAM-SECURITY.md.
+
